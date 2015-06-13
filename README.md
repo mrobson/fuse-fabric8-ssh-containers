@@ -62,7 +62,7 @@ Finally, we can create a third node which we can use to host some services.
 
 Running a container list will now display your 3 new nodes, connected to the Fabric, with the default profile.
 
-JBossFuse:admin@root> container-list 
+	JBossFuse:admin@root> container-list 
 	[id]                           [version] [connected] [profiles]                                         [provision status]
 	amq-broker1                    1.5       true        default                                            success
 	amq-broker2                    1.5       true        default                                            success
