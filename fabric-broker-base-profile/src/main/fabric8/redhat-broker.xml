@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:amq="http://activemq.apache.org/schema/core"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="properties">
+            <bean class="org.fusesource.mq.fabric.ConfigurationProperties" />
+        </property>
+    </bean>
+
+    <broker
+        xmlns="http://activemq.apache.org/schema/core"
+        brokerName="${broker.name}"
+        dataDirectory="${data}"
+        dedicatedTaskRunner="true"
+        useJmx="true"
+        persistent="false">
+        
+        <destinationPolicy>
+            <policyMap>
+                <policyEntries>
+                    <policyEntry
+                        topic=">"
+                        producerFlowControl="true"
+                        cursorMemoryHighWaterMark="100"
+                        memoryLimit="10mb">
+                        <pendingMessageLimitStrategy>
+                            <constantPendingMessageLimitStrategy limit="1000" />
+                        </pendingMessageLimitStrategy>
+                    </policyEntry>
+                    <policyEntry
+                        queue=">"
+                        producerFlowControl="true"
+                        cursorMemoryHighWaterMark="100"
+                        memoryLimit="10mb">
+                        <pendingQueuePolicy>
+                            <vmQueueCursor />
+                        </pendingQueuePolicy>
+                    </policyEntry>
+                </policyEntries>
+            </policyMap>
+        </destinationPolicy>
+
+        <managementContext>
+            <managementContext
+                createConnector="false" />
+        </managementContext>
+
+        <networkConnectors>
+            <networkConnector
+                name="${broker.network.name.1}"
+                uri="${broker.network.uri.1}"
+                userName="${broker.username}"
+                password="${broker.password}"
+                conduitSubscriptions="false"
+                decreaseNetworkConsumerPriority="true"
+                >
+            </networkConnector>
+        </networkConnectors>
+
+        <amq:persistenceAdapter>
+            <amq:levelDB
+                directory="${broker.data.dir}" />
+        </amq:persistenceAdapter>                
+
+        <plugins>
+            <jaasAuthenticationPlugin configuration="karaf" />
+        </plugins>
+        
+        <systemUsage>
+            <systemUsage
+                sendFailIfNoSpace="true">
+                <memoryUsage>
+                    <memoryUsage
+                        limit="64 mb" />
+                </memoryUsage>
+                <storeUsage>
+                    <storeUsage
+                        limit="1 gb" />
+                </storeUsage>
+                <tempUsage>
+                    <tempUsage
+                        limit="500 mb" />
+                </tempUsage>
+            </systemUsage>
+        </systemUsage>
+
+        <transportConnectors>
+            <transportConnector
+                name="${broker.client.transport.name}"
+                uri="${broker.client.transport.uri}" />
+            <transportConnector
+                name="${broker.nob.transport.name}"
+                uri="${broker.nob.transport.uri}" />
+        </transportConnectors>
+    </broker>
+</beans>
