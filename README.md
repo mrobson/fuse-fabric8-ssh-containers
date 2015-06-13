@@ -30,11 +30,11 @@ Prerequisites
 The Build Out                                                                                                             
 -------------
 
-The first thing we're going to do is access our root container and open up a client session from the bin/ directory:
+1) The first thing we're going to do is access our root container and open up a client session from the bin/ directory:
 
 	./client
 
-Now we will create a remote container using the ssh method.  This container will server as an AMQ Broker.
+2) Now we will create a remote container using the ssh method.  This container will server as an AMQ Broker.
 
 	JBossFuse:admin@root> fabric:container-create-ssh --host fusefabric3.lab.com --user root --password password --new-user admin --new-user-password admin --resolver manualip --manual-ip fusefabric3.lab.com amq-broker1
 	The following containers have been created successfully:
@@ -48,19 +48,19 @@ On the remote host, you will see a new directory created called containers/ in t
 
 	/root/containers/amq-broker1/fabric8-karaf-1.0.0.redhat-431/
 
-Create another ssh container on a different server to act as a second AMQ node.
+3) Create another ssh container on a different server to act as a second AMQ node.
 
 	JBossFuse:admin@root> fabric:container-create-ssh --host fusefabric4.lab.com --user root --password password --new-user admin --new-user-password admin --resolver manualip --manual-ip fusefabric4.lab.com amq-broker2
 	The following containers have been created successfully:
 	Container: amq-broker2.
 
-Finally, we can create a third node which we can use to host some services.
+4) Finally, we can create a third node which we can use to host some services.
 
 	JBossFuse:admin@root> fabric:container-create-ssh --host fusefabric5.lab.com --user root --password password --new-user admin --new-user-password admin --resolver manualip --manual-ip fusefabric5.lab.com fuse-services
 	The following containers have been created successfully:
 	Container: fuse-services.
 
-Running a container list will now display your 3 new nodes, connected to the Fabric, with the default profile.
+5) Running a container list will now display your 3 new nodes, connected to the Fabric, with the default profile.
 
 	JBossFuse:admin@root> container-list 
 	[id]                           [version] [connected] [profiles]                                         [provision status]
@@ -75,15 +75,15 @@ Running a container list will now display your 3 new nodes, connected to the Fab
 
 Now that our containers are created, we can move on to adding some functionality!  We will start the by creating 2 ActiveMQ brokers configured as a Network of Brokers.  We will also generate the associated client configuration.  To do this, we have packaged the process into repeatable profiles.  There is a base profile, applicable to any environment, along with 2 detailed profiles specific to the current environment.  This allows for convenient usage in Fabric across environments.  The detailed profile inherits from the base profile to reduce the amount of required configuration.
 
-1) clone the project
+6) clone the project
 
         git clone https://github.com/mrobson/fuse-fabric8-ssh-containers.git
 
-2) change to project directory
+7) change to project directory
 
         cd fuse-fabric8-ssh-containers
 
-3) build and deploy the projects
+8) build and deploy the projects
 
 	mvn fabric8:deploy -Dfabric8.jolokiaUrl=http://fusefabric1.lab.com:8181/jolokia
 
@@ -183,7 +183,7 @@ The profiles are built and deployed using the fabric8 maven plugin.  Check out h
 	  password admin
 	  user admin
 
-4) Now that the profiles have been deployed into the fabric, you can assign them to the appropriate containers.
+9) Now that the profiles have been deployed into the fabric, you can assign them to the appropriate containers.
 
 	JBossFuse:admin@root> container-add-profile amq-broker1 mq-broker-redHatBrokerNetwork.redhat-broker1
 	
@@ -213,11 +213,11 @@ On broker1, you will now see if connect successfully to broker2.
 	2015-06-13 18:37:22,667 | INFO  | ActiveMQ Task-4  | TransportConnector               | tivemq.broker.TransportConnector  260 | 131 - org.apache.activemq.activemq-osgi - 5.9.0.redhat-611431 | Connector vm://redhat-broker1 started
 	2015-06-13 18:37:22,693 | INFO  | edhat-broker1#22 | DemandForwardingBridgeSupport    | rk.DemandForwardingBridgeSupport  475 | 131 - org.apache.activemq.activemq-osgi - 5.9.0.redhat-611431 | Network connection between vm://redhat-broker1#22 and tcp://fusefabric4.lab.com/10.10.183.206:61617@52059 (redhat-broker2) has been established.
 
-5) The last piece is to provision the client profile to our services node where we will later deploy some example code to test everything out.
+10) The last piece is to provision the client profile to our services node where we will later deploy some example code to test everything out.
 
 	JBossFuse:admin@root> container-add-profile fuse-services mq-client-redHatBrokerNetwork
 
-6) Verify everyone was successfully provisioned
+11) Verify everyone was successfully provisioned
 
 	JBossFuse:admin@root> container-list 
 	[id]                           [version] [connected] [profiles]                                            [provision status]
@@ -231,3 +231,5 @@ On broker1, you will now see if connect successfully to broker2.
 	root5                          1.5       true        fabric, fabric-ensemble-0001-5                        success
 
 Done!
+
+To add some services to your container that utilize your brokers, continue on to part 3 <https://github.com/mrobson/fuse-fabric8-amq>.
