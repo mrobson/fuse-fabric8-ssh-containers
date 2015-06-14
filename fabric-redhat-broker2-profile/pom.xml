@@ -26,6 +26,7 @@
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.mrobson.example.fabric8-amq</groupId>
 	<artifactId>production-broker2</artifactId>
 	<packaging>pom</packaging>
 	<name>fabric8 AMQ :: Red Hat Broker 2 Detailed Config</name>

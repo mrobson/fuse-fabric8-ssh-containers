@@ -1,10 +1,10 @@
-﻿Creating additional containers for Active-MQ and Services in your Fabric (part2)
+﻿Creating additional containers for ActiveMQ and Services in your Fabric (part2)
 ================================================================================
 Author: Matt Robson
 
 Technologies: Fuse, Fabric8, ActiveMQ, fabric8-maven-plugin, Profiles
 
-Product: Fuse 6.1, Active-MQ 6.1
+Product: Fuse 6.1, ActiveMQ 6.1
 
 Breakdown                                                                                                                     
 ---------                                                                                                                     
@@ -21,7 +21,7 @@ System Requirements
 Before building out your Fabric, you will need:
 * Java 1.7
 * JBoss Fuse 6.1
-* JBoss Active-MQ 6.1
+* JBoss ActiveMQ 6.1
 
 Prerequisites
 -------------
