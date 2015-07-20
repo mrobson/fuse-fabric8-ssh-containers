@@ -36,6 +36,7 @@
 		<module>fabric-broker-base-profile</module>
 		<module>fabric-redhat-broker1-profile</module>
 		<module>fabric-redhat-broker2-profile</module>
+		<module>fabric-redhat-broker3-profile</module>
 		<module>fabric-redhat-broker-client-profile</module>
 	</modules>
 	<build>

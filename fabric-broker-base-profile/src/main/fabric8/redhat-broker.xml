@@ -22,29 +22,34 @@
         useJmx="true"
         persistent="false">
         
-        <destinationPolicy>
-            <policyMap>
-                <policyEntries>
-                    <policyEntry
-                        topic=">"
-                        producerFlowControl="true"
-                        cursorMemoryHighWaterMark="100"
-                        memoryLimit="10mb">
-                        <pendingMessageLimitStrategy>
-                            <constantPendingMessageLimitStrategy limit="1000" />
-                        </pendingMessageLimitStrategy>
-                    </policyEntry>
-                    <policyEntry
-                        queue=">"
-                        producerFlowControl="true"
-                        cursorMemoryHighWaterMark="100"
-                        memoryLimit="10mb">
-                        <pendingQueuePolicy>
-                            <vmQueueCursor />
-                        </pendingQueuePolicy>
-                    </policyEntry>
-                </policyEntries>
-            </policyMap>
+        <destinationPolicy>                                                                                                                                                                                                             
+            <policyMap>                                                                                                                                                                                                                 
+                <policyEntries>                                                                                                                                                                                                         
+                    <policyEntry                                                                                                                                                                                                        
+                        topic=">"                                                                                                                                                                                                       
+                        producerFlowControl="true"                                                                                                                                                                                      
+                        cursorMemoryHighWaterMark="100"                                                                                                                                                                                 
+                        memoryLimit="10mb">                                                                                                                                                                                             
+                        <pendingMessageLimitStrategy>                                                                                                                                                                                   
+                            <constantPendingMessageLimitStrategy                                                                                                                                                                        
+                                limit="10" />                                                                                                                                                                                           
+                        </pendingMessageLimitStrategy>                                                                                                                                                                                  
+                    </policyEntry>                                                                                                                                                                                                      
+                    <policyEntry                                                                                                                                                                                                        
+                        queue=">"                                                                                                                                                                                                       
+                        producerFlowControl="true"                                                                                                                                                                                      
+                        cursorMemoryHighWaterMark="100"                                                                                                                                                                                 
+                        memoryLimit="10mb">                                                                                                                                                                                             
+                        <pendingQueuePolicy>                                                                                                                                                                                            
+                            <vmQueueCursor />                                                                                                                                                                                           
+                        </pendingQueuePolicy>                                                                                                                                                                                           
+                        <amq:networkBridgeFilterFactory>                                                                                                                                                                                
+                            <conditionalNetworkBridgeFilterFactory                                                                                                                                                                      
+                                replayWhenNoConsumers="true" />                                                                                                                                                                         
+                        </amq:networkBridgeFilterFactory>                                                                                                                                                                               
+                    </policyEntry>                                                                                                                                                                                                      
+                </policyEntries>                                                                                                                                                                                                        
+            </policyMap>                                                                                                                                                                                                                
         </destinationPolicy>
 
         <managementContext>
@@ -59,8 +64,23 @@
                 userName="${broker.username}"
                 password="${broker.password}"
                 conduitSubscriptions="false"
-                decreaseNetworkConsumerPriority="true"
+                decreaseNetworkConsumerPriority="false"
                 >
+			<dynamicallyIncludedDestinations>                                                                                                                                                                                       
+				<queue physicalName="com.redhat.>" />                                                                                                                                                                        
+			</dynamicallyIncludedDestinations>
+            </networkConnector>
+            <networkConnector
+                name="${broker.network.name.2}"
+                uri="${broker.network.uri.2}"
+                userName="${broker.username}"
+                password="${broker.password}"
+                conduitSubscriptions="false"
+                decreaseNetworkConsumerPriority="false"
+                >
+			<dynamicallyIncludedDestinations>                                                                                                                                                                                       
+				<queue physicalName="com.redhat.>" />                                                                                                                                                                        
+			</dynamicallyIncludedDestinations>
             </networkConnector>
         </networkConnectors>
 
@@ -72,6 +92,14 @@
         <plugins>
             <jaasAuthenticationPlugin configuration="karaf" />
         </plugins>
+
+        <sslContext>
+            <sslContext
+                keyStore="file:///opt/fuse/jboss-fuse-6.1.0.redhat-379/certs/jbosskey.jks"
+                keyStorePassword="jbosscert"
+                trustStore="file:///opt/fuse/jboss-fuse-6.1.0.redhat-379/certs/jbosstrust.jks"
+                trustStorePassword="jbosscert" />
+        </sslContext>
         
         <systemUsage>
             <systemUsage
