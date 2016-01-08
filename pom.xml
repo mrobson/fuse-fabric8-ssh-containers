@@ -30,7 +30,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<fabric8-maven-plugin-version>1.2.0.Beta4</fabric8-maven-plugin-version>
+		<fabric8-maven-plugin-version>1.2.0.redhat-621084</fabric8-maven-plugin-version>
 	</properties>
 	<modules>
 		<module>fabric-broker-base-profile</module>

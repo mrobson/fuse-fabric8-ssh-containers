@@ -32,8 +32,9 @@
 	<name>fabric8 AMQ :: Red Hat Broker Client</name>
 	<properties>
 		<fabric8.profile>mq-client-redHatBrokerNetwork</fabric8.profile>
-		<fabric8.parentProfiles></fabric8.parentProfiles>
-		<fabric8.profileVersion>1.5</fabric8.profileVersion>
+		<fabric8.parentProfiles>karaf</fabric8.parentProfiles>
+		<fabric8.baseVersion>1.0</fabric8.baseVersion>
+		<fabric8.profileVersion>1.0</fabric8.profileVersion>
 	</properties>
 	<build>
 		<resources>

@@ -1,0 +1,65 @@
+mq-create --version 1.5 --parent-profile mq-redhat --group redHatBrokerNetwork --kind StandAlone --assign-container amq-broker1 redhat-broker1
+
+profile-display mq-broker-mattsBrokerNetwork.redhat-broker1
+
+profile-edit --pid org.fusesource.mq.fabric.server-redhat-broker1/broker.client.transport.uri=tcp://fusefabric3.gsslab.rdu2.redhat.com:61616
+
+profile-edit --pid org.fusesource.mq.fabric.server-redhat-broker1/broker.client.transport.uri=tcp://fusefabric3.gsslab.rdu2.redhat.com:61616 mq-broker-mattsBrokerNetwork.redhat-broker1
+
+profile-edit --pid org.fusesource.mq.fabric.server-redhat-broker1/broker.nob.transport.uri=tcp://fusefabric3.gsslab.rdu2.redhat.com:61617 mq-broker-mattsBrokerNetwork.redhat-broker1
+
+profile-edit --pid org.fusesource.mq.fabric.server-redhat-broker1/broker.network.uri.1=static:(tcp://fusefabric4.gsslab.rdu2.redhat.com:61617)
+
+profile-edit --pid org.fusesource.mq.fabric.server-redhat-broker1/broker.network.uri.1=static:(tcp://fusefabric4.gsslab.rdu2.redhat.com:61617) mq-broker-mattsBrokerNetwork.redhat-broker1
+
+mq-create --version 1.5 --parent-profile mq-redhat --group mattsBrokerNetwork --kind StandAlone --assign-container amq-broker2 redhat-broker2
+
+profile-edit --pid org.fusesource.mq.fabric.server-redhat-broker2/broker.client.transport.uri=tcp://fusefabric4.gsslab.rdu2.redhat.com:61616 mq-broker-mattsBrokerNetwork.redhat-broker2
+
+profile-edit --pid org.fusesource.mq.fabric.server-redhat-broker2/broker.nob.transport.uri=tcp://fusefabric4.gsslab.rdu2.redhat.com:61617 mq-broker-mattsBrokerNetwork.redhat-broker2
+
+profile-edit --pid org.fusesource.mq.fabric.server-redhat-broker2/broker.network.uri.1=static:(tcp://fusefabric3.gsslab.rdu2.redhat.com:61617) mq-broker-mattsBrokerNetwork.redhat-broker2
+
+profile-edit --pid org.fusesource.mq.fabric.server-redhat-broker2/password=admin mq-broker-mattsBrokerNetwork.redhat-broker2
+
+profile-edit --pid org.fusesource.mq.fabric.server-redhat-broker1/password=admin mq-broker-mattsBrokerNetwork.redhat-broker1
+
+profile-edit --pid org.fusesource.mq.fabric.server-redhat-broker1/password=passwd mq-broker-mattsBrokerNetwork.redhat-broker1
+
+profile-edit --pid org.fusesource.mq.fabric.server-redhat-broker1/broker.password=admin mq-broker-mattsBrokerNetwork.redhat-broker1
+
+profile-edit --pid org.fusesource.mq.fabric.server-redhat-broker2/broker.password=admin mq-broker-mattsBrokerNetwork.redhat-broker2
+
+profile-edit --pid --pid org.fusesource.mq.fabric.server-redhat-broker1/password mq-broker-mattsBrokerNetwork.redhat-broker1
+
+profile-edit --pid --pid org.fusesource.mq.fabric.server-redhat-broker1/password= mq-broker-mattsBrokerNetwork.redhat-broker1
+
+profile-edit --pid org.fusesource.mq.fabric.server-redhat-broker1/password= mq-broker-mattsBrokerNetwork.redhat-broker1
+
+profile-edit --delete --pid org.fusesource.mq.fabric.server-redhat-broker1/password mq-broker-mattsBrokerNetwork.redhat-broker1
+
+profile-edit --delete --pid org.fusesource.mq.fabric.server-redhat-broker2/password mq-broker-mattsBrokerNetwork.redhat-broker2
+
+profile-edit --pid org.fusesource.mq.fabric.cf/user=admin mq-client-mattsBrokerNetwork
+
+profile-edit --pid org.fusesource.mq.fabric.cf/password=admin mq-client-mattsBrokerNetwork
+
+container-add-profile fuse-services mq-client-mattsBrokerNetwork 
+profile-edit --pid org.fusesource.mq.fabric.server-redhat-broker2/broker-name=amq mq-broker-mattsBrokerNetwork.redhat-broker2
+profile-edit --pid org.fusesource.mq.fabric.server-redhat-broker1/broker-name=amq mq-broker-mattsBrokerNetwork.redhat-broker1
+profile-edit --pid org.fusesource.mq.fabric.cf/brokerUrl=discovery://(fabric:mattsBrokerNetwork) mq-client-mattsBrokerNetwork 
+profile-edit --features camel-amq fabric8-amq-producer 
+profile-edit --delete --features camel-amq fabric8-amq-producer 
+container-add-profile fuse-services fabric8-amq-producer 
+profile-edit --pid org.fusesource.mq.fabric.server-redhat-broker2/broker-name=redhat-broker2 mq-broker-mattsBrokerNetwork.redhat-broker2
+profile-edit --pid org.fusesource.mq.fabric.server-redhat-broker1/broker-name=redhat-broker1 mq-broker-mattsBrokerNetwork.redhat-broker1
+
+
+
+fabric:container-create-ssh --host fusefabric3.gsslab.rdu2.redhat.com --user root --password password --new-user admin --new-user-password admin --resolver manualip --manual-ip fusefabric3.gsslab.rdu2.redhat.com amq-broker1
+fabric:container-create-ssh --host fusefabric4.gsslab.rdu2.redhat.com --user root --password password --new-user admin --new-user-password admin --resolver manualip --manual-ip fusefabric4.gsslab.rdu2.redhat.com amq-broker2
+fabric:container-create-ssh --host fusefabric5.gsslab.rdu2.redhat.com --user root --password password --new-user admin --new-user-password admin --resolver manualip --manual-ip fusefabric5.gsslab.rdu2.redhat.com fuse-services
+container-add-profile fuse-services fabric8-amq-producer
+container-remove-profile fuse-services fabric8-amq-producer
+profile-edit --features mq-client-base mq-client-mattsBrokerNetwork 
+profile-edit --delete --features mq-client-base mq-client-mattsBrokerNetwork 

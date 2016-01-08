@@ -1,16 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <beans
-    xmlns="http://www.springframework.org/schema/beans"
-    xmlns:amq="http://activemq.apache.org/schema/core"
-    xmlns:p="http://www.springframework.org/schema/p"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+  xmlns="http://www.springframework.org/schema/beans"
+  xmlns:amq="http://activemq.apache.org/schema/core"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+  http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="properties">
-            <bean class="org.fusesource.mq.fabric.ConfigurationProperties" />
+            <bean class="io.fabric8.mq.fabric.ConfigurationProperties"/>
         </property>
     </bean>
 
@@ -20,6 +17,7 @@
         dataDirectory="${data}"
         dedicatedTaskRunner="true"
         useJmx="true"
+	start="false"
         persistent="false">
         
         <destinationPolicy>                                                                                                                                                                                                             

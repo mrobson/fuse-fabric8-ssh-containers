@@ -33,7 +33,8 @@
         <properties>
 		<fabric8.profile>mq-broker-redHatBrokerNetwork.redhat-broker2</fabric8.profile>
 		<fabric8.parentProfiles>mq-redhat</fabric8.parentProfiles>
-		<fabric8.profileVersion>1.5</fabric8.profileVersion>
+		<fabric8.baseVersion>1.0</fabric8.baseVersion>
+		<fabric8.profileVersion>1.0</fabric8.profileVersion>
         </properties>
 	<build>
 		<resources>
