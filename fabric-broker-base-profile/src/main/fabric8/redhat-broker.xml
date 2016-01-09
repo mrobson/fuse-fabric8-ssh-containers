@@ -91,14 +91,6 @@
             <jaasAuthenticationPlugin configuration="karaf" />
         </plugins>
 
-        <sslContext>
-            <sslContext
-                keyStore="file:///opt/fuse/jboss-fuse-6.1.0.redhat-379/certs/jbosskey.jks"
-                keyStorePassword="jbosscert"
-                trustStore="file:///opt/fuse/jboss-fuse-6.1.0.redhat-379/certs/jbosstrust.jks"
-                trustStorePassword="jbosscert" />
-        </sslContext>
-        
         <systemUsage>
             <systemUsage
                 sendFailIfNoSpace="true">
