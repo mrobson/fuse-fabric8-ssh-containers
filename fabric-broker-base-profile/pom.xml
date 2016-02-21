@@ -33,7 +33,7 @@
 	<properties>
 		<fabric8.profile>mq-redhat</fabric8.profile>
 		<fabric8.parentProfiles>karaf</fabric8.parentProfiles>
-		<fabric8.profileVersion>1.5</fabric8.profileVersion>
+		<fabric8.profileVersion>1.0</fabric8.profileVersion>
 		<fabric8.features>mq-fabric mq-fabric-http-discovery</fabric8.features>
 		<fabric8.featureRepos>mvn:org.apache.activemq/activemq-karaf/${version:activemq}/xml/features</fabric8.featureRepos>
 	</properties>
